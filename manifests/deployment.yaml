@@ -19,7 +19,7 @@ spec:
         - name: web
           # 👇 ĐẶT LẠI image này cho đúng registry của bạn
           # ví dụ khi bạn push lên Docker Hub: docker.io/haovn2411/projectargocd:latest
-          image: docker.io/haovn2411/argocd:latest
+          image: docker.io/haovn2411/argocd:main
           imagePullPolicy: IfNotPresent
 
           # .NET 8 Kestrel mặc định lắng cổng 8080 khi set ASPNETCORE_URLS
