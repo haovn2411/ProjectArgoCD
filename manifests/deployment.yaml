@@ -26,6 +26,8 @@ spec:
           env:
             - name: ASPNETCORE_URLS
               value: http://0.0.0.0:5000
+            - name: ASPNETCORE_ENVIRONMENT
+              value: Development   # <— thêm dòng này
 
           ports:
             - name: http
