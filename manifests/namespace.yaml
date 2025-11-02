@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: project-argocd-dev
+  labels:
+    app.kubernetes.io/name: project-argocd
+    app.kubernetes.io/part-of: project-argocd

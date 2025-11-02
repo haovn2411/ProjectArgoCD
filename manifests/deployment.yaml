@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: project-argocd
+  namespace: project-argocd-dev
+  labels:
+    app.kubernetes.io/name: project-argocd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: project-argocd
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: project-argocd
+    spec:
+      containers:
+        - name: web
+          # 👇 ĐẶT LẠI image này cho đúng registry của bạn
+          # ví dụ khi bạn push lên Docker Hub: docker.io/haovn2411/projectargocd:latest
+          image: docker.io/haovn2411/argocd:latest
+          imagePullPolicy: IfNotPresent
+
+          # .NET 8 Kestrel mặc định lắng cổng 8080 khi set ASPNETCORE_URLS
+          env:
+            - name: ASPNETCORE_URLS
+              value: http://0.0.0.0:5000
+
+          ports:
+            - name: http
+              containerPort: 8080
+
+                    # Probes gọi tới /healthz cho ổn định (ít thay đổi logic)
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 5     # app khởi động rất nhanh; nếu cần tăng lên 10–15
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 3
+
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 20
+            timeoutSeconds: 2
+            failureThreshold: 3
+
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 250m
+              memory: 256Mi
