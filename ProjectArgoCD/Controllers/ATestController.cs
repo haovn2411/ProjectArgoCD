@@ -7,7 +7,7 @@ namespace ProjectArgoCD.Controllers
     [ApiController]
     public class ATestController : ControllerBase
     {
-        [HttpGet(Name = "GetWeatherForecast")]
+        [HttpGet]
         public IActionResult Get()
         {
             return Ok("This is a test endpoint from ATestController.");
