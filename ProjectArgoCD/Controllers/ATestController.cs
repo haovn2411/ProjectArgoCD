@@ -12,5 +12,10 @@ namespace ProjectArgoCD.Controllers
         {
             return Ok("This is a test endpoint from ATestController.");
         }
+        [HttpPost]
+        public IActionResult Post()
+        {
+            return Ok("Post");
+        }
     }
 }
